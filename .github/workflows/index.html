@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Servicios ISO - Recursos Hídricos, Energía y Hidrógeno Verde | Alianza del Pacífico</title>
+  <meta name="description" content="Servicios profesionales ISO para gestión de recursos hídricos, energía y proyectos de hidrógeno verde en Colombia, Chile, Perú y México. Monitoreo GNSS & GPX en tiempo real, informes e integración gubernamental." />
+  <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+  <!-- Leaflet CSS -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css" crossorigin="anonymous" />
+  <style>
+    :root{
+      --accent:#1f8a70;
+      --accent-2:#2b6f4a;
+      --muted:#6b7280;
+      --bg1: linear-gradient(180deg, rgba(245,251,249,1) 0%, rgba(233,247,242,1) 50%, rgba(240,253,249,1) 100%);
+      --glass: rgba(255,255,255,0.7);
+      --card-shadow: 0 6px 18px rgba(16,24,40,0.06);
+      font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+    }
+    html,body{height:100%;margin:0;background:var(--bg1);color:#0f172a}
+    body::before{
+      content:'';position:fixed;inset:0;z-index:-1;pointer-events:none;
+      background-image: radial-gradient(ellipse at 10% 10%, rgba(31,138,112,0.06) 0%, transparent 30%),
+                        radial-gradient(ellipse at 90% 80%, rgba(43,111,74,0.04) 0%, transparent 25%);
+      opacity:1;
+    }
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 24px}
+    .brand{display:flex;gap:12px;align-items:center}
+    .logo{width:56px;height:56px;border-radius:10px;background:linear-gradient(135deg,var(--accent),var(--accent-2));display:flex;align-items:center;justify-content:center;color:white; font-weight:700;box-shadow:0 4px 12px rgba(16,24,40,0.12)}
+    .brand h1{font-size:18px;margin:0}
+    nav a{margin-left:14px;color:var(--muted);text-decoration:none;font-weight:600}
+    main{max-width:1200px;margin:18px auto;padding:18px}
+    .grid{display:grid;grid-template-columns:1fr 420px;gap:18px}
+    .card{background:var(--glass);backdrop-filter: blur(6px);border-radius:12px;padding:16px;box-shadow:var(--card-shadow)}
+    h2{margin:0 0 8px 0}
+    p.small{color:var(--muted);font-size:14px}
+    .services{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+    .service-item{display:flex;gap:12px;align-items:flex-start}
+    .icon-circle{width:44px;height:44px;border-radius:10px;display:inline-flex;align-items:center;justify-content:center;background:rgba(31,138,112,0.12);font-weight:700}
+    #map{height:360px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)}
+    .monitor-controls{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+    .btn{background:var(--accent);color:white;padding:8px 12px;border-radius:8px;border:none;cursor:pointer;font-weight:600}
+    .btn.ghost{background:transparent;color:var(--accent);border:1px solid rgba(31,138,112,0.12)}
+    .charts{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px}
+    canvas{width:100%!important;height:220px!important}
+    footer{max-width:1200px;margin:18px auto;padding:18px;text-align:center;color:var(--muted)}
+    @media(max-width:980px){.grid{grid-template-columns:1fr}.charts{grid-template-columns:1fr}.services{grid-template-columns:1fr}}
+    .flag-row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+    .flag{display:flex;gap:6px;align-items:center;padding:6px 8px;border-radius:8px;background:rgba(0,0,0,0.03)}
+    .kbd{background:#f3f4f6;border-radius:6px;padding:4px 6px;font-weight:700}
+    form .row{display:flex;gap:8px}
+    form input, form textarea{width:100%;padding:10px;border-radius:8px;border:1px solid rgba(15,23,42,0.06)}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="brand">
+      <div class="logo">AP</div>
+      <div>
+        <h1>ISO Pacífico - Gestión Hídrica, Energética & Hidrógeno</h1>
+        <div class="small">Servicios ISO | Alianza del Pacífico (Colombia, Chile, Perú, México) • Alianzas con Costa Rica, Ecuador y Panamá</div>
+      </div>
+    </div>
+    <nav>
+      <a href="#servicios">Servicios</a>
+      <a href="#monitor">Monitoreo</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#contacto" class="kbd">Contactar</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="grid">
+      <div>
+        <article class="card">
+          <h2 id="servicios">Nuestros servicios</h2>
+          <p class="small">Diseñamos, implementamos y certificamos sistemas de gestión ISO aplicados a recursos hídricos (ISO 14001 / ISO 45001 + guías sectoriales), energía (ISO 50001) e hidrógeno verde (normativa técnica y de seguridad aplicada). Trabajamos con empresas privadas y gobiernos de la Alianza del Pacífico y países asociados.</p>
+          <div class="services" style="margin-top:12px">
+            <div class="service-item"><div class="icon-circle">H</div><div><strong>Gestión Hídrica</strong><div class="small">Evaluaciones, auditorías ISO, planes de reutilización y economías circulares del agua.</div></div></div>
+            <div class="service-item"><div class="icon-circle">E</div><div><strong>Gestión Energética (ISO 50001)</strong><div class="small">Diagnósticos energéticos, planes de eficiencia y transición a renovables.</div></div></div>
+            <div class="service-item"><div class="icon-circle">G</div><div><strong>Hidrógeno Verde</strong><div class="small">Estudios de viabilidad, seguridad, cumplimiento normativo y certificaciones de origen verde.</div></div></div>
+            <div class="service-item"><div class="icon-circle">P</div><div><strong>Proyectos & Alianzas</strong><div class="small">Cooperación público-privada entre Colombia, Chile, Perú y México. Asociaciones con Costa Rica, Ecuador y Panamá.</div></div></div>
+          </div>
+          <hr style="margin:14px 0;border:none;border-top:1px solid rgba(15,23,42,0.04)">
+          <div class="flag-row">
+            <div class="flag" title="Alianza del Pacífico"><svg width="28" height="28" viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="4" fill="#1F8A70"/><path d="M6 6L18 18M6 18L18 6" stroke="white" stroke-width="1.5" stroke-linecap="round"/></svg><small>Alianza del Pacífico</small></div>
+            <div class="flag" title="Icono Ambiental"><svg width="28" height="28" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9" fill="#2B6F4A"/><path d="M8 13c1-2 4-3 6-2" stroke="#E6F8F0" stroke-width="1.4" stroke-linecap="round"/></svg><small>Medio Ambiente</small></div>
+            <div style="margin-left:auto;color:var(--muted);font-size:13px">Idiomas: Español • Inglés • Portugués (soporte)</div>
+          </div>
+        </article>
+
+        <article class="card" id="monitor" style="margin-top:12px">
+          <h2>Monitoreo en tiempo real</h2>
+          <p class="small">Mapa interactivo GNSS + visor GPX. Puede cargar archivos GPX o conectar una fuente GNSS/streaming NMEA/GeoJSON para ver rutas y puntos en tiempo real. (Simulador incluido para demostración).</p>
+          <div id="map"></div>
+          <div class="monitor-controls">
+            <label class="btn ghost" id="btn-sim-start">Iniciar simulación GNSS</label>
+            <label class="btn ghost" id="btn-sim-stop">Detener simulación</label>
+            <label class="btn" id="btn-upload">Cargar GPX</label>
+            <input type="file" id="gpxFile" accept=".gpx" style="display:none">
+            <button class="btn ghost" id="btn-clear">Limpiar</button>
+          </div>
+          <div class="charts">
+            <div class="card"><h3>Uso de recursos (gráfico)</h3><canvas id="chart-usage"></canvas></div>
+            <div class="card"><h3>Inversión por país (gráfico)</h3><canvas id="chart-invest"></canvas></div>
+          </div>
+        </article>
+
+        <article class="card" id="proyectos" style="margin-top:12px">
+          <h2>Proyectos y políticas</h2>
+          <p class="small">Trabajamos con gobiernos y entes reguladores para desarrollar políticas de transición energética, gestión de recursos hídricos y marcos regulatorios para hidrógeno verde.</p>
+          <ul>
+            <li>Diseño de políticas públicas para transición energética y adaptación climática.</li>
+            <li>Programas de formación y auditoría para autoridades locales.</li>
+            <li>Implementación de SI de gestión integrados (Calidad, Ambiente, Energía y Seguridad).</li>
+          </ul>
+
+          <!-- Santiago de Chile en 3D -->
+          <h3 style="margin-top:18px">Santiago de Chile: una de las ciudades ejemplo de desarrollo y sostenibilidad de la Alianza del Pacífico</h3>
+          <div style="margin-top:10px;border-radius:12px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,0.1)">
+            <iframe 
+              src="https://www.google.com/maps/embed?pb=!4v1694567890!6m8!1m7!1sCAoSLEFGMVFpcE5xVEtvYUd2SkxURk9KZlE1aGhJdEtueVhrcGZrV2ZUNnZtSlFJ!2m2!1d-33.4489!2d-70.6693!3f75!4f0!5f0.7820865974627469" 
+              width="100%" height="400" style="border:0" allowfullscreen="" loading="lazy"></iframe>
+          </div>
+        </article>
+      </div>
+
+      <aside>
+        <div class="card">
+          <h2>Contacto</h2>
+          <p class="small">Solicite una propuesta técnica o una auditoría inicial.</p>
+          <form id="contactForm">
+            <div class="row"><input type="text" id="name" placeholder="Nombre / Empresa" required></div>
+            <div class="row" style="margin-top:8px"><input type="email" id="email" placeholder="Correo electrónico" required></div>
+            <div style="margin-top:8px"><textarea id="message" rows="4" placeholder="Escriba brevemente el requerimiento"></textarea></div>
+            <div style="margin-top:8px;display:flex;gap:8px"><button class="btn" type="submit">Enviar</button><button class="btn ghost" type="button" id="sample-prop">Descargar propuesta (ej.)</button></div>
+          </form>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Alcance regional</h3>
+          <p class="small">Operamos en:</p>
+          <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px">
+            <div><strong>Miembros Alianza del Pacífico:</strong> Colombia • Chile • Perú • México</div>
+            <div><strong>Asociados:</strong> Costa Rica • Ecuador • Panamá</div>
+          </div>
+          <hr style="margin:12px 0;border:none;border-top:1px solid rgba(15,23,42,0.04)"/>
+          <p class="small">Certificaciones, formación en norma ISO, consultoría técnica y seguimiento GNSS/IoT.</p>
+        </div>
+
+        <div class="card" style="margin-top:12px">
+          <h3>Conectar datos GNSS</h3>
+          <p class="small">Para datos reales puede conectar:
+            <ul>
+              <li>Endpoint WebSocket con mensajes GeoJSON / NMEA convertidos</li>
+              <li>API que entregue GeoJSON con lat/lng y timestamp</li>
+              <li>Dispositivo con puerto que exponga NMEA (requiere gateway)</li>
+            </ul>
+          </p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <footer>
+    <div class="small">© 2025 ISO Pacífico — Servicios integrados de gestión y transición energética. Diseño responsivo • Demo técnica.</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet-gpx/1.7.0/gpx.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.3.0/chart.umd.min.js"></script>
+  <script>
+    const map = L.map('map').setView([-12.0, -76.0], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19}).addTo(map);
+    const gpxLayerGroup = L.layerGroup().addTo(map);
+    const simLayerGroup = L.layerGroup().addTo(map);
+    const gpxInput=document.getElementById('gpxFile');
+    document.getElementById('btn-upload').addEventListener('click',()=>gpxInput.click());
+    gpxInput.addEventListener('change', (ev)=>{
+      const f=ev.target.files[0]; if(!f)return;
+      const url=URL.createObjectURL(f);
+      gpxLayerGroup.clearLayers();
+      new L.GPX(url,{async:true}).on('loaded',e=>map.fitBounds(e.target.getBounds())).addTo(gpxLayerGroup);
+    });
+    document.getElementById('btn-clear').addEventListener('click',()=>{gpxLayerGroup.clearLayers();simLayerGroup.clearLayers();});
+    let simInterval=null;const simPath=[];const simMarker=L.layerGroup().addTo(simLayerGroup);
+    function startSim(){if(simInterval)return;let i=0;simPath.length=0;simMarker.clearLayers();
+      simInterval=setInterval(()=>{
+        const lat=-12+Math.sin(i/6)*10+(Math.random()-0.5)*0.3;
+        const lng=-75+Math.cos(i/6)*20+(Math.random()-0.5)*0.6;
+        simPath.push([lat,lng]);simMarker.clearLayers();
+        L.polyline(simPath,{color:'#1f8a70'}).addTo(simMarker);
+        L.circleMarker([lat,lng],{radius:6,fill:true,fillOpacity:1}).addTo(simMarker);
+        map.panTo([lat,lng]);i++;
+      },1200);}
+    function stopSim(){if(simInterval){clearInterval(simInterval);simInterval=null;}}
+    document.getElementById('btn-sim-start').addEventListener('click',startSim);
+    document.getElementById('btn-sim-stop').addEventListener('click',stopSim);
+    const usageChart=new Chart(document.getElementById('chart-usage'),{type:'line',data:{labels:['2019','2020','2021','2022','2023','2024'],datasets:[{label:'Consumo Hídrico (m3)',data:[1200,1100,1150,1080,1000,950],tension:0.4,borderWidth:2,fill:true,backgroundColor:'rgba(31,138,112,0.08)',borderColor:'#1f8a70'},{label:'Consumo Energía (MWh)',data:[320,300,310,290,270,250],tension:0.4,borderWidth:2,fill:true,backgroundColor:'rgba(43,111,74,0.08)',borderColor:'#2b6f4a'}]}});
+    const investChart=new Chart(document.getElementById('chart-invest'),{type:'bar',data:{labels:['Colombia','Chile','Perú','México'],datasets:[{label:'Inversión (M USD)',data:[120,150,100,130],backgroundColor:['#1f8a70','#2b6f4a','#6b7280','#94a3b8']}]}});
+    document.getElementById('contactForm').addEventListener('submit',e=>{e.preventDefault();alert("Gracias por su interés. Responderemos en breve.");e.target.reset();});
+    document.getElementById('sample-prop').addEventListener('click',()=>alert("Descarga de propuesta ejemplo en construcción."));
+  </script>
+</body>
+</html>
